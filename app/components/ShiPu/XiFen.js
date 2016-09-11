@@ -7,10 +7,10 @@ import {
   ListView,
    TouchableHighlight
 } from 'react-native';
+import DetailGrid from './XiFenDetail/DetailGrid';
 
 export default class Xifen extends Component{
 	static propTypes = {
-		title: PropTypes.string.isRequired,
 		navigator: PropTypes.object.isRequired,
 	}
 	constructor(props) {
@@ -30,12 +30,21 @@ export default class Xifen extends Component{
 
 	renderRow = (row) => {
 		return (
-			<TouchableHighlight onPress={() => {}}>
+			<TouchableHighlight onPress={() => {this.forward(row)}}>
 				<View style={styles.category}>
 					<Text>{row.value}</Text>
 				</View>
 			</TouchableHighlight>
 		);
+	}
+
+	forward = (row) => {
+		this.props.navigator.push({
+			title: row.value,
+			component: DetailGrid,
+			navigationBarHidden: false,
+			passProps: {url: row.href}
+		});
 	}
 
 	render() {
