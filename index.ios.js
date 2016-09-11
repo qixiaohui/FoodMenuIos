@@ -21,7 +21,7 @@ class FoodMenu extends Component {
       <NavigatorIOS style={{flex: 1}}
         navigationBarHidden={true}
         initialRoute={{
-          title: 'base',
+          title: '',
           component: BaseComponent,
           passProps: {nav}
         }}

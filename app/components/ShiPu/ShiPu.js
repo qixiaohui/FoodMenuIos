@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Rest from '../../rest/http';
 import properties from '../../util/properties';
+import Xifen from './XiFen';
 import {
   AppRegistry,
   StyleSheet,
@@ -36,12 +37,21 @@ export default class Shipu extends Component{
 
 	renderRow = (row) => {
 		return (
-			<TouchableHighlight onPress={() => {}}>
+			<TouchableHighlight onPress={() => {this.forward(row)}}>
 				<View style={styles.category}>
 					<Text>{row.category}</Text>
 				</View>
 			</TouchableHighlight>
 		);
+	}
+
+	forward = (row) => {
+		this.props.navigator.push({
+			title: row.category,
+			component: Xifen,
+			navigationBarHidden: false,
+			passProps: {data: row.subCategory}
+		});
 	}
 
 	render() {

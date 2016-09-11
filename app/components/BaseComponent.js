@@ -26,7 +26,7 @@ export default class BaseComponent extends Component {
 	        barTintColor='#212121'
 	      	>
 	      		<TabBarIOS.Item
-		        title='shipu'
+		        title='食谱'
 		        icon={require('../img/icon/ic_restaurant_menu.png')}
 		        selected={this.state.selectedTab === 'shipu'}
 		        onPress={() => {
