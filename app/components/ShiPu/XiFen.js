@@ -30,7 +30,7 @@ export default class Xifen extends Component{
 
 	renderRow = (row) => {
 		return (
-			<TouchableHighlight onPress={() => {this.forward(row)}}>
+			<TouchableHighlight style={styles.row} onPress={() => {this.forward(row)}}>
 				<View style={styles.category}>
 					<Text>{row.value}</Text>
 				</View>
@@ -51,11 +51,23 @@ export default class Xifen extends Component{
 		return (
 			<View style={styles.container}>
 				<ListView
+				renderSeparator={this._renderSeparator}
 				dataSource={this.state.dataSource}
 				renderRow={this.renderRow.bind(this)}
-				style={styles.listview}
 				 />
 			</View>
+		);
+	}
+
+	_renderSeparator = (sectionID: number, rowID: number, adjacentRowHighlighted: bool) => {
+		return (
+		  <View
+		    key={`${sectionID}-${rowID}`}
+		    style={{
+		      height: adjacentRowHighlighted ? 4 : 1,
+		      backgroundColor: adjacentRowHighlighted ? '#3B5998' : '#CCCCCC',
+		    }}
+		  />
 		);
 	}
 };
@@ -64,8 +76,14 @@ var styles = StyleSheet.create({
   container: {
   	flex: 1
   },
-  listview: {
+  category: {
   	margin: 5
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 10,
+    backgroundColor: '#f5fcff',
   }
 });
 

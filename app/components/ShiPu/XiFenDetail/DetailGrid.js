@@ -10,8 +10,9 @@ import {
 } from 'react-native';
 import properties  from '../../../util/properties'
 import rest from '../../../rest/http';
+import Recipes from './Recipe';
 
-export default class Xifen extends Component{
+export default class DetailGrid extends Component{
 	static propTypes = {
 		navigator: PropTypes.object.isRequired,
 		url: PropTypes.string.isRequired
@@ -39,14 +40,29 @@ export default class Xifen extends Component{
 
 	renderRow = (row) => {
 		let img = row.img.split('@')[0];
+		let value = row.value;
+		if(row.value.length >= 9){
+			value = value.slice(0,8)+'...';
+		}
 		return (
 			<View style={styles.item}>
-	            <Image style={styles.thumb} source={{uri: img}} />
+				<TouchableHighlight  onPress={() => {this.forward(row)}}>
+	            	<Image style={styles.thumb} source={{uri: img}} />
+	            </TouchableHighlight>
 	            <Text style={styles.text}>
-	              {row.value}
+	              {value}
 	            </Text>
 			</View>
 		);
+	}
+
+	forward = (row) => {
+		this.props.navigator.push({
+			title: row.value,
+			component: Recipes,
+			navigationBarHidden: false,
+			passProps: {url: row.href}
+		});
 	}
 
 	render() {
@@ -77,10 +93,12 @@ var styles = StyleSheet.create({
   },
   item: {
     justifyContent: 'center',
-    padding: 5,
-    margin: 10,
+    padding: 3,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
     width: 100,
-    height: 100,
+    height: 95,
     backgroundColor: '#F6F6F6',
     alignItems: 'center',
     borderWidth: 1,
@@ -88,12 +106,13 @@ var styles = StyleSheet.create({
     borderColor: '#CCC'
   },
   thumb: {
-    width: 64,
+    width: 90,
     height: 64
   },
   text: {
+  	fontSize: 10,
     flex: 1,
-    marginTop: 5,
+    marginTop: 7,
     fontWeight: 'bold'
   }
 });
