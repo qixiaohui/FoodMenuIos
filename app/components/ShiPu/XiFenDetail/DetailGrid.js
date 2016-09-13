@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import properties  from '../../../util/properties'
 import rest from '../../../rest/http';
-import Recipes from './Recipe';
+import Recipe from './Recipe';
 
 export default class DetailGrid extends Component{
 	static propTypes = {
@@ -59,7 +59,7 @@ export default class DetailGrid extends Component{
 	forward = (row) => {
 		this.props.navigator.push({
 			title: row.value,
-			component: Recipes,
+			component: Recipe,
 			navigationBarHidden: false,
 			passProps: {url: row.href}
 		});
