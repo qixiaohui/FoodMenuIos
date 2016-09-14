@@ -26,6 +26,17 @@ export default class BaseComponent extends Component {
 	        barTintColor='#212121'
 	      	>
 	      		<TabBarIOS.Item
+		        title='附近'
+		        icon={require('../img/icon/ic_track_changes.png')}
+		        selected={this.state.selectedTab === 'nearby'}
+		        onPress={() => {
+		          this.setState({
+		            selectedTab: 'nearby'
+		          });
+		        }}
+		        >
+		        </TabBarIOS.Item>
+	      		<TabBarIOS.Item
 		        title='食谱'
 		        icon={require('../img/icon/ic_restaurant_menu.png')}
 		        selected={this.state.selectedTab === 'shipu'}
@@ -36,6 +47,17 @@ export default class BaseComponent extends Component {
 		        }}
 		        >
 		        	<Shipu navigator={this.props.navigator} />
+		        </TabBarIOS.Item>
+		        <TabBarIOS.Item
+		        title='我'
+		        icon={require('../img/icon/ic_person_white.png')}
+		        selected={this.state.selectedTab === 'login'}
+		        onPress={() => {
+		          this.setState({
+		            selectedTab: 'login'
+		          });
+		        }}
+		        >
 		        </TabBarIOS.Item>
 	      	</TabBarIOS>
 		);

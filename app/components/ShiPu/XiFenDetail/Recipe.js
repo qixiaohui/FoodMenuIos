@@ -94,8 +94,6 @@ var styles = StyleSheet.create({
   },
   gallery: {
   	marginTop: 70,
-  	marginLeft: 10,
-  	marginRight: 10,
   	marginBottom: 10,
   	height: 200
   },

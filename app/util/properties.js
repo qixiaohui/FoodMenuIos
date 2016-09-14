@@ -1,7 +1,7 @@
 const properties = {
-	caipudaquan: 'http://localhost:8080/foodindex/caipudaquan',
-	caipufeilei: 'http://localhost:8080/foodsubindex/caipufenlei',
-	zuofa: 'http://localhost:8080/cookguide/zuofa'
+	caipudaquan: 'https://fathomless-stream-79171.herokuapp.com/foodindex/caipudaquan',
+	caipufeilei: 'https://fathomless-stream-79171.herokuapp.com/foodsubindex/caipufenlei',
+	zuofa: 'https://fathomless-stream-79171.herokuapp.com/cookguide/zuofa'
 };
 
 module.exports = properties;

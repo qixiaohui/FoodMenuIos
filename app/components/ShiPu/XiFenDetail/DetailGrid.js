@@ -24,14 +24,28 @@ export default class DetailGrid extends Component{
 		this.state = {
 			dataSource: new ListView.DataSource({
     			rowHasChanged: (row1, row2) => row1 !== row2,        
-			})
+			}),
+			menuIndex: 2
 		};
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		rest.get(properties.caipufeilei, {url: this.props.url}).then((response) => {
 			this.setState({
 				dataSource: this.state.dataSource.cloneWithRows(response.data.list)
+			});
+		}).catch((err) => {
+			console.error(err);
+		});
+	}
+
+	fetchMoreMenu = () => {
+		if(!this.state.dataSource._dataBlob) return;
+		rest.get(properties.caipufeilei, {url: `${this.props.url}?page=${this.state.menuIndex}`}).then((response) => {
+			// concat more menu list from current menu list and increment page index
+			this.setState({
+				dataSource: this.state.dataSource.cloneWithRows(this.state.dataSource._dataBlob.s1.concat(response.data.list)),
+				menuIndex: this.state.menuIndex+1
 			});
 		}).catch((err) => {
 			console.error(err);
@@ -69,6 +83,7 @@ export default class DetailGrid extends Component{
 		return (
 			<View style={styles.container}>
 				<ListView
+				onEndReached={this.fetchMoreMenu()}
 				contentContainerStyle={styles.list}
 				dataSource={this.state.dataSource}
 				renderRow={this.renderRow.bind(this)}
@@ -81,7 +96,8 @@ export default class DetailGrid extends Component{
 
 var styles = StyleSheet.create({
   container: {
-  	flex: 1
+  	flex: 1,
+  	backgroundColor: '#f5fcff'
   },
   listview: {
   	margin: 5
