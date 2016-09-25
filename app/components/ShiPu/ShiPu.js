@@ -68,7 +68,7 @@ export default class Shipu extends Component{
 		} else {
 			return (
 	            <View style={styles.containerLoading}>
-                    <Spinner color='#45D56E' />
+                    <Spinner color='blue' />
 	            </View>
 			);
 		}
@@ -85,7 +85,7 @@ var styles = StyleSheet.create({
     alignItems: 'center'
   },
   listview: {
-  	paddingTop: 5,
+  	paddingTop: 15,
   },
   row: {
     flexDirection: 'row',

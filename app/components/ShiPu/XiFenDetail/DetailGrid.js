@@ -95,7 +95,7 @@ export default class DetailGrid extends Component{
 		} else {
 			return (
 	            <View style={styles.containerLoading}>
-                    <Spinner color='#45D56E' />
+                    <Spinner color='blue' />
 	            </View>
 			);
 		}

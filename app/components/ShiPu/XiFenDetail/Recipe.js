@@ -41,10 +41,18 @@ export default class Recipes extends Component{
 		   						{_.map(this.state.recipe.content, (recipe) => {
 									return (
 										<View>
-										<Badge style={{marginTop: 15}} primary>{recipe.subtitle}</Badge>
+										<Badge style={{marginTop: 20, marginBottom: 5}} primary>{recipe.subtitle}</Badge>
+					                    <Card>
 										{_.map(recipe.list, (list) => {
-											return (<Text style={styles.recipe} key={list}>{list}</Text>);
+											return (
+						                        <CardItem>                        
+						                            <Text style={styles.recipe} key={list}>
+						                                {list}
+						                            </Text>
+						                        </CardItem>
+											);
 										})}
+					                    </Card>
 										</View>
 									);
 								})}
@@ -59,7 +67,7 @@ export default class Recipes extends Component{
 		}else{
 			return (
 	            <View style={styles.containerLoading}>
-                    <Spinner color='#45D56E' />
+                    <Spinner color='blue' />
 	            </View>
 			);
 		}
