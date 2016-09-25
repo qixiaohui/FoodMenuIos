@@ -9,6 +9,7 @@ import {
   ScrollView,
    TouchableHighlight
 } from 'react-native';
+import { Container, Content, Card, CardItem, Thumbnail, Button, Badge, Spinner } from 'native-base';
 
 import properties  from '../../../util/properties';
 import rest from '../../../rest/http';
@@ -32,30 +33,34 @@ export default class Recipes extends Component{
 			let img = this.state.recipe.img.split('@')[0];
 			console.log(this.state.recipe.content);
 			return (
-				<ScrollView style={styles.container}>
-					<View>
-						<Image style={styles.gallery} source={{uri: img}} />
-						{_.map(this.state.recipe.content, (recipe) => {
-							return (
-								<View key={recipe.subtitle}>
-									<View>
-										<Text style={styles.title}>
-											{recipe.subtitle}
-										</Text>
-									</View>
-									{_.map(recipe.list, (list) => {
-										return (<Text style={styles.recipe} key={list}>{list}</Text>);
-									})}
-								</View>
-							);
-						})}
-					</View>
-				</ScrollView>
+	            <Container style={{ marginTop: 70}}>
+	                <Content>
+	                    <Card>
+	                        <CardItem cardBody> 
+	                            <Image style={{ resizeMode: 'cover', height: 180 }} source={{uri: img}} /> 
+		   						{_.map(this.state.recipe.content, (recipe) => {
+									return (
+										<View>
+										<Badge style={{marginTop: 15}} primary>{recipe.subtitle}</Badge>
+										{_.map(recipe.list, (list) => {
+											return (<Text style={styles.recipe} key={list}>{list}</Text>);
+										})}
+										</View>
+									);
+								})}
+	                            <Button transparent textStyle={{color: '#87838B'}}>
+	                                389 Stars
+	                            </Button>
+	                        </CardItem>
+	                   </Card>
+	                </Content>
+	            </Container>
 			);
 		}else{
-			return(
-				<View style={styles.container}>
-				</View>
+			return (
+	            <View style={styles.containerLoading}>
+                    <Spinner color='#45D56E' />
+	            </View>
 			);
 		}
 	}
@@ -93,9 +98,7 @@ var styles = StyleSheet.create({
   	backgroundColor: '#f5fcff'
   },
   gallery: {
-  	marginTop: 70,
-  	marginBottom: 10,
-  	height: 200
+  	marginTop: 70
   },
   title: {
 
@@ -113,5 +116,10 @@ var styles = StyleSheet.create({
   	paddingRight: 20,
   	paddingTop: 5,
   	paddingBottom: 5
-  }
+  },
+  containerLoading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 });

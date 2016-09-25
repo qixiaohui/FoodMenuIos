@@ -8,6 +8,7 @@ import {
   ListView,
    TouchableHighlight
 } from 'react-native';
+import { Container, Content, Card, CardItem, Thumbnail, Icon, Spinner } from 'native-base';
 import properties  from '../../../util/properties'
 import rest from '../../../rest/http';
 import Recipe from './Recipe';
@@ -59,14 +60,14 @@ export default class DetailGrid extends Component{
 			value = value.slice(0,8)+'...';
 		}
 		return (
-			<View style={styles.item}>
-				<TouchableHighlight  onPress={() => {this.forward(row)}}>
-	            	<Image style={styles.thumb} source={{uri: img}} />
-	            </TouchableHighlight>
-	            <Text style={styles.text}>
-	              {value}
-	            </Text>
-			</View>
+            <Card >
+                <CardItem button onPress={() => {this.forward(row)}}>                       
+                    <Image style={{ resizeMode: 'cover' }} source={{uri: img}} /> 
+                </CardItem>
+                <CardItem>
+                    <Text style={{textAlign: 'center'}}>{value}</Text>
+                </CardItem>
+           </Card>
 		);
 	}
 
@@ -80,17 +81,24 @@ export default class DetailGrid extends Component{
 	}
 
 	render() {
-		return (
-			<View style={styles.container}>
-				<ListView
-				onEndReached={this.fetchMoreMenu()}
-				contentContainerStyle={styles.list}
-				dataSource={this.state.dataSource}
-				renderRow={this.renderRow.bind(this)}
-				style={styles.listview}
-				 />
-			</View>
-		);
+		if(this.state.dataSource._dataBlob) {
+			return (
+				<View style={styles.container}>
+					<ListView
+					onEndReached={this.fetchMoreMenu()}
+					dataSource={this.state.dataSource}
+					renderRow={this.renderRow.bind(this)}
+					style={styles.listview}
+					 />
+				</View>
+			);
+		} else {
+			return (
+	            <View style={styles.containerLoading}>
+                    <Spinner color='#45D56E' />
+	            </View>
+			);
+		}
 	}
 }
 
@@ -99,8 +107,13 @@ var styles = StyleSheet.create({
   	flex: 1,
   	backgroundColor: '#f5fcff'
   },
+  containerLoading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   listview: {
-  	margin: 5
+  	margin: 3
   },
   list: {
     justifyContent: 'center',
@@ -130,5 +143,10 @@ var styles = StyleSheet.create({
     flex: 1,
     marginTop: 7,
     fontWeight: 'bold'
+  },
+  containerLoading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });

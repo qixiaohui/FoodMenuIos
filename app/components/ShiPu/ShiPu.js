@@ -14,6 +14,8 @@ import {
   ActivityIndicatorIOS
 } from 'react-native';
 
+import {Container, Content, Spinner, ListItem, Badge} from 'native-base';
+
 export default class Shipu extends Component{
 	constructor(props) {
 		super(props);
@@ -37,11 +39,10 @@ export default class Shipu extends Component{
 
 	renderRow = (row) => {
 		return (
-			<TouchableHighlight style={styles.row} onPress={() => {this.forward(row)}}>
-				<View style={styles.category}>
-					<Text>{row.category}</Text>
-				</View>
-			</TouchableHighlight>
+            <ListItem button onPress={() => {this.forward(row)}}>
+                <Text>{row.category}</Text>
+                <Badge primary>{row.subCategory.length}</Badge>
+            </ListItem>
 		);
 	}
 
@@ -55,27 +56,22 @@ export default class Shipu extends Component{
 	}
 
 	render() {
-		return (
-			<View style={styles.container} >
-				<ListView
-				renderSeparator={this._renderSeparator}
-				dataSource={this.state.dataSource}
-				renderRow={this.renderRow.bind(this)}
-				style={styles.listview} />
-			</View>
-		);
-	}
-
-	_renderSeparator = (sectionID: number, rowID: number, adjacentRowHighlighted: bool) => {
-		return (
-		  <View
-		    key={`${sectionID}-${rowID}`}
-		    style={{
-		      height: adjacentRowHighlighted ? 4 : 1,
-		      backgroundColor: adjacentRowHighlighted ? '#3B5998' : '#CCCCCC',
-		    }}
-		  />
-		);
+		if(this.state.dataSource._dataBlob) {
+			return (
+				<View style={styles.container} >
+					<ListView
+					dataSource={this.state.dataSource}
+					renderRow={this.renderRow.bind(this)}
+					style={styles.listview} />
+				</View>
+			);
+		} else {
+			return (
+	            <View style={styles.containerLoading}>
+                    <Spinner color='#45D56E' />
+	            </View>
+			);
+		}
 	}
 }
 
@@ -83,11 +79,13 @@ var styles = StyleSheet.create({
   container: {
   	flex: 1
   },
+  containerLoading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   listview: {
   	paddingTop: 5,
-  },
-  category: {
-  	margin: 5
   },
   row: {
     flexDirection: 'row',

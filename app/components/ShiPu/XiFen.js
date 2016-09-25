@@ -8,6 +8,7 @@ import {
    TouchableHighlight
 } from 'react-native';
 import DetailGrid from './XiFenDetail/DetailGrid';
+import {ListItem} from 'native-base';
 
 export default class Xifen extends Component{
 	static propTypes = {
@@ -30,11 +31,9 @@ export default class Xifen extends Component{
 
 	renderRow = (row) => {
 		return (
-			<TouchableHighlight style={styles.row} onPress={() => {this.forward(row)}}>
-				<View style={styles.category}>
-					<Text>{row.value}</Text>
-				</View>
-			</TouchableHighlight>
+            <ListItem button onPress={() => {this.forward(row)}}>
+                <Text>{row.value}</Text>
+            </ListItem>
 		);
 	}
 
@@ -51,23 +50,10 @@ export default class Xifen extends Component{
 		return (
 			<View style={styles.container}>
 				<ListView
-				renderSeparator={this._renderSeparator}
 				dataSource={this.state.dataSource}
 				renderRow={this.renderRow.bind(this)}
 				 />
 			</View>
-		);
-	}
-
-	_renderSeparator = (sectionID: number, rowID: number, adjacentRowHighlighted: bool) => {
-		return (
-		  <View
-		    key={`${sectionID}-${rowID}`}
-		    style={{
-		      height: adjacentRowHighlighted ? 4 : 1,
-		      backgroundColor: adjacentRowHighlighted ? '#3B5998' : '#CCCCCC',
-		    }}
-		  />
 		);
 	}
 };
@@ -75,9 +61,6 @@ export default class Xifen extends Component{
 var styles = StyleSheet.create({
   container: {
   	flex: 1
-  },
-  category: {
-  	margin: 5
   },
   row: {
     flexDirection: 'row',
